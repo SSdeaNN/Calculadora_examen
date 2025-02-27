@@ -1,33 +1,76 @@
-document.addEventListener("DOMContentLoaded", function() {
-   const screen = document.getElementById("screen");
-   const buttons = document.querySelectorAll("button");
+let pantalla = document.getElementById("screen");
+let numero1 = "";
+let numero2 = "";
+let operador = "";
 
-   buttons.forEach(button => {
-       button.addEventListener("click", function() {
-           const value = this.textContent;
-           if (value === "C") {
-               clearScreen();
-           } else if (value === "=") {
-               calculate();
-           } else {
-               getInput(value);
-           }
-       });
-   });
+function getInput(valor) {
+    if (!isNaN(valor) || valor === "0") {
+        if (operador === "") {
+            numero1 += valor;
+        } else {
+            numero2 += valor;
+        }
+    } else {
+        if (numero1 !== "" && numero2 === "") {
+            operador = valor;
+        }
+    }
+    pantalla.value += valor;
+}
 
-   function getInput(value) {
-       screen.value += value;
-   }
+function calculate() {
+    if (numero1 !== "" && numero2 !== "" && operador !== "") {
+        let resultado = 0;
+        let n1 = parseFloat(numero1);
+        let n2 = parseFloat(numero2);
 
-   function calculate() {
-       try {
-           screen.value = eval(screen.value);
-       } catch {
-           screen.value = "Error";
-       }
-   }
+        switch (operador) {
+            case "+":
+                resultado = sumar(n1, n2);
+                break;
+            case "-":
+                resultado = restar(n1, n2);
+                break;
+            case "*":
+                resultado = multiplicar(n1, n2);
+                break;
+            case "/":
+                resultado = dividir(n1, n2);
+                break;
+            default:
+                resultado = "Error";
+        }
 
-   function clearScreen() {
-       screen.value = "";
-   }
-});
+        pantalla.value = resultado;
+        reiniciarCalculadora(resultado);
+    }
+}
+
+function clearScreen() {
+    pantalla.value = "";
+    numero1 = "";
+    numero2 = "";
+    operador = "";
+}
+
+function reiniciarCalculadora(resultado) {
+    numero1 = resultado.toString();
+    numero2 = "";
+    operador = "";
+}
+
+function sumar(a, b) {
+    return a + b;
+}
+
+function restar(a, b) {
+    return a - b;
+}
+
+function multiplicar(a, b) {
+    return a * b;
+}
+
+function dividir(a, b) {
+    return b !== 0 ? a / b : "Error";
+}
