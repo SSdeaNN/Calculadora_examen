@@ -1,14 +1,33 @@
-function getInput(value) {
-   document.getElementById("screen").value += value;
-}
+document.addEventListener("DOMContentLoaded", function() {
+   const screen = document.getElementById("screen");
+   const buttons = document.querySelectorAll("button");
 
-function calculate() {
-   let expression = document.getElementById("screen").value;
-   if(expression) {
-       document.getElementById("screen").value = eval(expression);
+   buttons.forEach(button => {
+       button.addEventListener("click", function() {
+           const value = this.textContent;
+           if (value === "C") {
+               clearScreen();
+           } else if (value === "=") {
+               calculate();
+           } else {
+               getInput(value);
+           }
+       });
+   });
+
+   function getInput(value) {
+       screen.value += value;
    }
-}
 
-function clearScreen() {
-   document.getElementById("screen").value = "";
-}
+   function calculate() {
+       try {
+           screen.value = eval(screen.value);
+       } catch {
+           screen.value = "Error";
+       }
+   }
+
+   function clearScreen() {
+       screen.value = "";
+   }
+});
