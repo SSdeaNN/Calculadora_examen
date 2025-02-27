@@ -1,0 +1,20 @@
+button{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #1fda25;
+    color: white;
+    border: none;
+}
+
+.screeen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #000000;
+}
+
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
